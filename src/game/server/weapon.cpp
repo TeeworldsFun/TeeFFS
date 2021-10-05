@@ -80,7 +80,7 @@ void CWeapon::HandleFire(vec2 Direction)
 				m_ReloadTimer = m_EmptyReloadPenalty * Server()->TickSpeed() / 1000;
 				m_AmmoRegenStart = Server()->Tick();
 			}
-			GameWorld()->CreateSound(Pos(), SOUND_WEAPON_NOAMMO);
+			GameWorld()->CreateSound(Pos(), SOUND_CHAT_SERVER);
 			m_LastNoAmmoSound = Server()->Tick();
 		}
 		return;

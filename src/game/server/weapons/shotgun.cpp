@@ -5,9 +5,9 @@
 CShotgun::CShotgun(CCharacter *pOwnerChar) :
 	CWeapon(pOwnerChar)
 {
-	m_MaxAmmo = g_pData->m_Weapons.m_aId[WEAPON_SHOTGUN].m_Maxammo;
-	m_AmmoRegenTime = g_pData->m_Weapons.m_aId[WEAPON_SHOTGUN].m_Ammoregentime;
-	m_FireDelay = g_pData->m_Weapons.m_aId[WEAPON_SHOTGUN].m_Firedelay;
+	m_MaxAmmo = 10;
+	m_AmmoRegenTime = 10;
+	m_FireDelay = 150;
 	m_FullAuto = true;
 }
 
@@ -62,5 +62,5 @@ void CShotgun::Fire(vec2 Direction)
 	}
 
 	Server()->SendMsg(&Msg, MSGFLAG_VITAL, ClientID);
-	GameWorld()->CreateSound(Pos(), SOUND_SHOTGUN_FIRE);
+	GameWorld()->CreateSound(Pos(), SOUND_PLAYER_SPAWN);
 }

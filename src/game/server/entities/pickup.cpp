@@ -52,7 +52,7 @@ void CPickup::Tick()
 			m_SpawnTick = -1;
 
 			if(m_Type == POWERUP_WEAPON)
-				GameWorld()->CreateSound(m_Pos, SOUND_WEAPON_SPAWN);
+				GameWorld()->CreateSound(m_Pos, SOUND_GRENADE_EXPLODE);
 		}
 	}
 
@@ -66,7 +66,7 @@ void CPickup::Tick()
 				m_SoloSpawnTick[i] = -1;
 
 				if(m_Type == POWERUP_WEAPON)
-					GameWorld()->CreateSound(m_Pos, SOUND_WEAPON_SPAWN, CmaskOne(i));
+					GameWorld()->CreateSound(m_Pos, SOUND_GRENADE_EXPLODE, CmaskOne(i));
 			}
 		}
 	}

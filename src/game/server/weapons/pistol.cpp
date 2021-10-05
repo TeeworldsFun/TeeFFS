@@ -8,6 +8,7 @@ CPistol::CPistol(CCharacter *pOwnerChar) :
 	m_MaxAmmo = g_pData->m_Weapons.m_aId[WEAPON_GUN].m_Maxammo;
 	m_AmmoRegenTime = g_pData->m_Weapons.m_aId[WEAPON_GUN].m_Ammoregentime;
 	m_FireDelay = g_pData->m_Weapons.m_aId[WEAPON_GUN].m_Firedelay;
+	m_FullAuto = true;
 }
 
 bool CPistol::BulletCollide(CProjectile *pProj, vec2 Pos, CCharacter *pHit, bool EndOfLife)
@@ -51,5 +52,5 @@ void CPistol::Fire(vec2 Direction)
 		Msg.AddInt(((int *)&p)[i]);
 
 	Server()->SendMsg(&Msg, MSGFLAG_VITAL, ClientID);
-	GameWorld()->CreateSound(Character()->m_Pos, SOUND_GUN_FIRE);
+	GameWorld()->CreateSound(Character()->m_Pos, SOUND_PLAYER_PAIN_LONG);
 }

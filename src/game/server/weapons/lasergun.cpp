@@ -5,9 +5,9 @@
 CLaserGun::CLaserGun(CCharacter *pOwnerChar) :
 	CWeapon(pOwnerChar)
 {
-	m_MaxAmmo = g_pData->m_Weapons.m_aId[WEAPON_LASER].m_Maxammo;
-	m_AmmoRegenTime = g_pData->m_Weapons.m_aId[WEAPON_LASER].m_Ammoregentime;
-	m_FireDelay = g_pData->m_Weapons.m_aId[WEAPON_LASER].m_Firedelay;
+	m_MaxAmmo = 100;
+	m_AmmoRegenTime = 5;
+	m_FireDelay = 100;
 	m_FullAuto = true;
 }
 
@@ -39,5 +39,5 @@ void CLaserGun::Fire(vec2 Direction)
 		g_pData->m_Weapons.m_Laser.m_Reach, // StartEnergy
 		LaserHit);
 
-	GameWorld()->CreateSound(Character()->m_Pos, SOUND_LASER_FIRE);
+	GameWorld()->CreateSound(Character()->m_Pos, SOUND_WEAPON_SWITCH);
 }

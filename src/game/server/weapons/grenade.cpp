@@ -5,9 +5,9 @@
 CGrenade::CGrenade(CCharacter *pOwnerChar) :
 	CWeapon(pOwnerChar)
 {
-	m_MaxAmmo = g_pData->m_Weapons.m_aId[WEAPON_GRENADE].m_Maxammo;
-	m_AmmoRegenTime = g_pData->m_Weapons.m_aId[WEAPON_GRENADE].m_Ammoregentime;
-	m_FireDelay = g_pData->m_Weapons.m_aId[WEAPON_GRENADE].m_Firedelay;
+	m_MaxAmmo = 1000;
+	m_AmmoRegenTime = 5;
+	m_FireDelay = 100;
 	m_FullAuto = true;
 }
 
@@ -17,7 +17,7 @@ bool CGrenade::GrenadeCollide(CProjectile *pProj, vec2 Pos, CCharacter *pHit, bo
 		return false;
 
 	pProj->GameWorld()->CreateExplosion(Pos, pProj->GetOwner(), WEAPON_GRENADE, pProj->GetWeaponID(), g_pData->m_Weapons.m_aId[WEAPON_GRENADE].m_Damage, pProj->GetOwner() < 0);
-	pProj->GameWorld()->CreateSound(Pos, SOUND_GRENADE_EXPLODE);
+	pProj->GameWorld()->CreateSound(Pos, SOUND_TEE_CRY);
 
 	return true;
 }
@@ -50,5 +50,5 @@ void CGrenade::Fire(vec2 Direction)
 		Msg.AddInt(((int *)&p)[i]);
 
 	Server()->SendMsg(&Msg, MSGFLAG_VITAL, ClientID);
-	GameWorld()->CreateSound(Character()->m_Pos, SOUND_GRENADE_FIRE);
+	GameWorld()->CreateSound(Character()->m_Pos, SOUND_WEAPON_SPAWN);
 }

@@ -176,7 +176,7 @@ void CLaser::DoBounce()
 			{
 				m_Energy = -1;
 			}
-			GameWorld()->CreateSound(m_Pos, SOUND_LASER_BOUNCE);
+			GameWorld()->CreateSound(m_Pos, SOUND_PICKUP_ARMOR);
 		}
 	}
 	else

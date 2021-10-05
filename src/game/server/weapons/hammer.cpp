@@ -6,14 +6,15 @@ CHammer::CHammer(CCharacter *pOwnerChar) :
 	CWeapon(pOwnerChar)
 {
 	m_MaxAmmo = g_pData->m_Weapons.m_aId[WEAPON_HAMMER].m_Maxammo;
-	m_AmmoRegenTime = g_pData->m_Weapons.m_aId[WEAPON_HAMMER].m_Ammoregentime;
-	m_FireDelay = g_pData->m_Weapons.m_aId[WEAPON_HAMMER].m_Firedelay;
+	m_AmmoRegenTime = 100;
+	m_FireDelay = 100;
+	m_FullAuto = true;
 }
 
 void CHammer::Fire(vec2 Direction)
 {
 	int ClientID = Character()->GetPlayer()->GetCID();
-	GameWorld()->CreateSound(Pos(), SOUND_HAMMER_FIRE);
+	GameWorld()->CreateSound(Pos(), SOUND_GRENADE_FIRE);
 
 	GameServer()->Antibot()->OnHammerFire(ClientID);
 

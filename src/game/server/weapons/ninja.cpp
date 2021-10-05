@@ -5,14 +5,15 @@
 CNinja::CNinja(CCharacter *pOwnerChar) :
 	CWeapon(pOwnerChar)
 {
-	m_MaxAmmo = g_pData->m_Weapons.m_aId[WEAPON_NINJA].m_Maxammo;
-	m_AmmoRegenTime = g_pData->m_Weapons.m_aId[WEAPON_NINJA].m_Ammoregentime;
-	m_FireDelay = g_pData->m_Weapons.m_aId[WEAPON_NINJA].m_Firedelay;
+	m_MaxAmmo = 5;
+	m_AmmoRegenTime = 10;
+	m_FireDelay = 100;
 	m_OldVelAmount = 0;
 	m_CurrentMoveTime = -1;
 	m_ActivationDir = vec2(0, 0);
 	m_NumObjectsHit = 0;
-	m_Duration = g_pData->m_Weapons.m_Ninja.m_Duration;
+	m_Duration = 1000;
+	m_FullAuto = true;
 }
 
 void CNinja::Fire(vec2 Direction)
@@ -23,7 +24,7 @@ void CNinja::Fire(vec2 Direction)
 	m_CurrentMoveTime = g_pData->m_Weapons.m_Ninja.m_Movetime * Server()->TickSpeed() / 1000;
 	m_OldVelAmount = length(Character()->Core()->m_Vel);
 
-	GameWorld()->CreateSound(Pos(), SOUND_NINJA_FIRE);
+	GameWorld()->CreateSound(Pos(), SOUND_TEE_CRY);
 }
 
 void CNinja::Tick()
@@ -77,7 +78,7 @@ void CNinja::Tick()
 					continue;
 
 				// Hit a player, give him damage and stuffs...
-				GameWorld()->CreateSound(aEnts[i]->m_Pos, SOUND_NINJA_HIT);
+				GameWorld()->CreateSound(aEnts[i]->m_Pos, SOUND_GRENADE_EXPLODE);
 				// set his velocity to fast upward (for now)
 				if(m_NumObjectsHit < 10)
 					m_apHitObjects[m_NumObjectsHit++] = aEnts[i];

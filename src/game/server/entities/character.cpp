@@ -532,16 +532,16 @@ void CCharacter::TickDefered()
 		int64 ExceptSelfIfSixup = Server()->IsSixup(CID) ? CmaskAllExceptOne(CID) : -1LL;
 
 		if(Events & COREEVENT_GROUND_JUMP)
-			GameWorld()->CreateSound(m_Pos, SOUND_PLAYER_JUMP, ExceptSelf);
+			GameWorld()->CreateSound(m_Pos, SOUND_PLAYER_DIE, ExceptSelf);
 
 		if(Events & COREEVENT_HOOK_ATTACH_PLAYER)
-			GameWorld()->CreateSound(m_Pos, SOUND_HOOK_ATTACH_PLAYER, ExceptSelfIfSixup);
+			GameWorld()->CreateSound(m_Pos, SOUND_PLAYER_AIRJUMP, ExceptSelfIfSixup);
 
 		if(Events & COREEVENT_HOOK_ATTACH_GROUND)
-			GameWorld()->CreateSound(m_Pos, SOUND_HOOK_ATTACH_GROUND, ExceptSelf);
+			GameWorld()->CreateSound(m_Pos, SOUND_PLAYER_JUMP, ExceptSelf);
 
 		if(Events & COREEVENT_HOOK_HIT_NOHOOK)
-			GameWorld()->CreateSound(m_Pos, SOUND_HOOK_NOATTACH, ExceptSelf);
+			GameWorld()->CreateSound(m_Pos, SOUND_PLAYER_SKID, ExceptSelf);
 	}
 
 	if(m_pPlayer->GetTeam() == TEAM_SPECTATORS)
@@ -592,7 +592,7 @@ void CCharacter::TickPaused()
 
 bool CCharacter::IncreaseHealth(int Amount)
 {
-	if(m_Health >= 10)
+	if(m_Health >= 5)
 		return false;
 	m_Health = clamp(m_Health + Amount, 0, 10);
 	return true;
@@ -612,7 +612,7 @@ void CCharacter::Die(int Killer, int Weapon)
 		Server()->StopRecord(m_pPlayer->GetCID());
 
 	// a nice sound
-	GameWorld()->CreateSound(m_Pos, SOUND_PLAYER_DIE);
+	GameWorld()->CreateSound(m_Pos, SOUND_TEE_CRY);
 
 	// this is to rate limit respawning to 3 secs
 	m_pPlayer->m_PreviousDieTick = m_pPlayer->m_DieTick;
@@ -730,7 +730,7 @@ bool CCharacter::TakeDamage(vec2 Force, int Dmg, int From, int Weapon, int Weapo
 		}
 	}
 
-	if(!(DamageFlag & DAMAGE_NO_DEATH))
+	/*if(!(DamageFlag & DAMAGE_NO_DEATH))
 	{
 		// check for death
 		if(m_Health <= 0)
@@ -751,15 +751,16 @@ bool CCharacter::TakeDamage(vec2 Force, int Dmg, int From, int Weapon, int Weapo
 			return false;
 		}
 	}
+	*/
 
 	if(!(DamageFlag & DAMAGE_NO_PAINSOUND))
 	{
 		if(Dmg > 2)
-			GameWorld()->CreateSound(m_Pos, SOUND_PLAYER_PAIN_LONG);
+			GameWorld()->CreateSound(m_Pos, SOUND_CHAT_HIGHLIGHT);
 		else if(Dmg > 0)
-			GameWorld()->CreateSound(m_Pos, SOUND_PLAYER_PAIN_SHORT);
+			GameWorld()->CreateSound(m_Pos, SOUND_CHAT_CLIENT);
 		else if(Dmg < 0)
-			GameWorld()->CreateSound(m_Pos, SOUND_PICKUP_HEALTH);
+			GameWorld()->CreateSound(m_Pos, SOUND_PLAYER_PAIN_SHORT);
 	}
 
 	if(!(DamageFlag & DAMAGE_NO_EMOTE))
@@ -1847,7 +1848,7 @@ void CCharacter::DDRacePostCoreTick()
 		if(!m_IsBlueTeleGunTeleport)
 			m_Core.m_Vel = vec2(0, 0);
 		GameWorld()->CreateDeath(m_TeleGunPos, m_pPlayer->GetCID());
-		GameWorld()->CreateSound(m_TeleGunPos, SOUND_WEAPON_SPAWN);
+		GameWorld()->CreateSound(m_TeleGunPos, SOUND_CTF_GRAB_EN);
 		m_TeleGunTeleport = false;
 		m_IsBlueTeleGunTeleport = false;
 	}
